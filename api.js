@@ -1,6 +1,8 @@
+import { apiKey, baseUrl } from './config.js';
+
 function getHeaders() {
   const myHeaders = new Headers();
-  myHeaders.append('apikey', 'UZYvz6gbt34vjteGe5dRRQoEyhf3nbtm');
+  myHeaders.append('apikey', apiKey);
   return myHeaders;
 }
 
@@ -10,10 +12,7 @@ export async function getCurrencies() {
     headers: getHeaders(),
   };
 
-  const response = await fetch(
-    'https://api.apilayer.com/exchangerates_data/symbols',
-    requestOptions,
-  );
+  const response = await fetch(`${baseUrl}/symbols`, requestOptions);
   const currencies = await response.json();
 
   return currencies?.symbols;
@@ -34,7 +33,7 @@ export async function getRates(base) {
   };
 
   const response = await fetch(
-    `https://api.apilayer.com/exchangerates_data/latest?base=${base}`,
+    `${baseUrl}/latest?base=${base}`,
     requestOptions,
   );
   const data = await response.json();
